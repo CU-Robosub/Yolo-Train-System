@@ -19,7 +19,7 @@ NOTE: You'll need pip installed to install the needed pkgs
 ```
 ./bag2images ___.bag
 ```
-3. A zip file ending in "_unlabeled.zip" will have been created containing the jpgs. From there see the section below titled "Labeling images from an *_unlabeled.zip file." Run the following command to unzip and load the unlabeled images into OpenLabeling:
+3. A zip file ending in "_unlabeled.zip" will have been created containing the jpgs. From there see the section below titled "Labeling images from an *_unlabeled.zip file." Run the following command to unzip and load the unlabeled images into OpenLabeling. It will prompt you for which bag file to move:
 ```
 ./label_zip
 ```

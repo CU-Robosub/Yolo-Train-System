@@ -21,7 +21,7 @@ try:
 except cv2.error:
     print('-> Please ignore this error message\n')
 cv2.destroyAllWindows()
-
+print("Loading Images...")
 
 parser = argparse.ArgumentParser(description='Open-source image labeling tool')
 parser.add_argument('-i', '--input_dir', default='input', type=str, help='Path to input directory')
