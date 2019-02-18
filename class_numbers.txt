@@ -1,2 +1,7 @@
-0 start_gate_poll
+0 start_gate_pole
 1 path
+2 dice1
+3 dice2
+4 dice5
+5 dice6
+6 roulette

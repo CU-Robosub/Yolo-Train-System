@@ -2,9 +2,64 @@
 	<arg name="bag_file" />
 	<arg name="image_dir" />
 	<node pkg="rosbag" type="play" name="rosbag" args="--clock $(arg bag_file)" required="true"/>
-	
-     <node name="extract" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+<!-- Image0 Real -->	
+     <node name="extractr0" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
         <remap from="image" to="/occam/image0"/>
+	<param name="filename_format" value="$(arg image_dir)-image0_%04d.jpg" />	
+      </node>
+<!-- Image1 Real -->      
+     <node name="extractr1" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/occam/image1"/>
+	<param name="filename_format" value="$(arg image_dir)-image1_%04d.jpg" />
+      </node>
+<!-- Image2 Real -->            
+     <node name="extractr2" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/occam/image2"/>
+	<param name="filename_format" value="$(arg image_dir)-image2_%04d.jpg" />
+      </node>
+<!-- Image3 Real -->            
+     <node name="extractr3" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/occam/image3"/>
+	<param name="filename_format" value="$(arg image_dir)-image3_%04d.jpg" />
+      </node>
+<!-- Image4 Real -->
+     <node name="extractr4" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/occam/image4"/>
+	<param name="filename_format" value="$(arg image_dir)-image4_%04d.jpg" />
+      </node>
+<!-- Downcam Real -->      
+<!--     <node name="extractr5" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/downcam"/>
 	<param name="filename_format" value="$(arg image_dir)-image0_%04d.jpg" />
-      </node> 
+      </node> --> <!-- WHAT TOPIC IS ACTUAL DOWNCAM? -->
+<!-- Simulated Image0 -->
+     <node name="extracts0" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/leviathan/camera_0/image_raw"/>
+	<param name="filename_format" value="$(arg image_dir)-image0s_%04d.jpg" />
+      </node>
+<!-- Simulated Image1 -->
+     <node name="extracts1" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/leviathan/camera_1/image_raw"/>
+	<param name="filename_format" value="$(arg image_dir)-image1s_%04d.jpg" />
+      </node>
+<!-- Simulated Image2 -->
+     <node name="extracts2" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/leviathan/camera_2/image_raw"/>
+	<param name="filename_format" value="$(arg image_dir)-image2s_%04d.jpg" />
+      </node>
+<!-- Simulated Image3 -->
+     <node name="extracts3" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/leviathan/camera_3/image_raw"/>
+	<param name="filename_format" value="$(arg image_dir)-image3s_%04d.jpg" />
+      </node>
+<!-- Simulated Image4 -->
+     <node name="extracts4" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/leviathan/camera_4/image_raw"/>
+	<param name="filename_format" value="$(arg image_dir)-image4s_%04d.jpg" />
+      </node>
+<!-- Simulated Downcam -->
+     <node name="extracts5" pkg="image_view" type="extract_images" respawn="false" required="true" cwd="ROS_HOME">
+        <remap from="image" to="/downcam"/>
+	<param name="filename_format" value="$(arg image_dir)-image5s_%04d.jpg" />
+      </node>      
     </launch>

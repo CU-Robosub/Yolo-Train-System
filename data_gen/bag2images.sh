@@ -48,15 +48,25 @@ strindex() {
 search_char=':'
 search_index=`strindex "$duration_str" "$search_char"`+2
 new_str=${duration_str: $search_index}
+echo $new_str
 search_char='s'
 search_index=`strindex "$new_str" "$search_char"`
 dur_mins=${new_str::$search_index}
+echo $dur_mins
 
-# find the time in seconds
-search_char='('
-search_index=`strindex "$duration_str" "$search_char"`+1
-new_str=${duration_str: $search_index}
-bag_file_seconds=${new_str%??}
+# Check if our bag file was less than 1min (No time in minutes)
+search_char=':'
+search_index=`strindex "$dur_mins" "$search_char"`
+if [ $search_index -eq "-1" ];
+then
+    bag_file_seconds=${dur_mins}
+else
+    # find the time in seconds
+    search_char='('
+    search_index=`strindex "$duration_str" "$search_char"`+1
+    new_str=${duration_str: $search_index}
+    bag_file_seconds=${new_str%??}
+fi
 echo "Bag file duration "$dur_mins"s"
 
 # Save the bag file as jpegs
@@ -74,7 +84,7 @@ export_path=`pwd`/images/$file_name_root
 roslaunch launch/export.launch bag_file:=$file_path image_dir:=$export_path &> tmp.txt
 
 # make sure everything's killed
-rm tmp.txt
+#rm tmp.txt
 pkill python
 echo "Finished Exporting images"
 

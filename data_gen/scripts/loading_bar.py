@@ -28,8 +28,9 @@ grace = GracefulKiller()
 
 if len(sys.argv) != 2:
     print("Error incorrect number of arguments: " + str(sys.argv))
+    sys.exit()
 else:
-    totalSeconds = int(sys.argv[1])
+    totalSeconds = int(float(sys.argv[1]))
 
 toolbar_width = 70
 barPerSecs = toolbar_width / totalSeconds
@@ -50,7 +51,7 @@ while not grace.kill_now and secondsPassed < totalSeconds:
   rospy.sleep(1) # do real work here
   secondsPassed += 1
   bars = int(barPerSecs * secondsPassed)
-  while bars > barsAccumulated:
+  while bars > barsAccumulated and not grace.kill_now:
     bar.update(barsAccumulated)
     barsAccumulated += 1    
         # sys.stdout.write("#")
