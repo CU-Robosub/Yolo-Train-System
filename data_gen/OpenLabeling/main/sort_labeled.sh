@@ -4,6 +4,7 @@ mkdir -p positives/labels
 mkdir -p positives/imgs
 mkdir -p negatives/labels
 mkdir -p negatives/imgs
+mkdir -p positives/xmls
 
 for i in $(ls output/YOLO_darknet); do
     content=`cat output/YOLO_darknet/$i`
@@ -13,7 +14,8 @@ for i in $(ls output/YOLO_darknet); do
 	mv input/$root_name.jpg negatives/imgs/$root_name.jpg
     else
 	mv output/YOLO_darknet/$i positives/labels/$i
-	mv input/$root_name.jpg positives/imgs/$root_name.jpg	
+	mv input/$root_name.jpg positives/imgs/$root_name.jpg
+	mv output/PASCAL_VOC/$root_name.xml positives/xmls/$root_name.xml
     fi
 done
 

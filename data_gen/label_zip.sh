@@ -10,7 +10,7 @@ fi
 num=`ls -l OpenLabeling/main/input/ | wc -l`
 if [ $num -ne 1 ]
 then
-    echo "OpenLabeling directory currently contains images. Please enter OpenLabeling/main and run labeled2zip.sh to save and clear these images if they are finished being labeled."
+    echo "OpenLabeling directory currently contains images. Please enter OpenLabeling/main and run labeled2zip.sh to save and clear these images if they are already labeled."
     exit
 fi
 
@@ -30,5 +30,15 @@ cp ${zip_arr[$res]} ../OpenLabeling/main/input/
 cd ../OpenLabeling/main/input
 unzip ${zip_arr[$res]}
 rm ${zip_arr[$res]}
+num_images=`ls -l |wc -l`
 cd ../../../
-echo ${zip_arr[$res]}" unzipped and loaded into OpenLabeling."
+#echo ${zip_arr[$res]}
+echo "Unzipped and loaded "$num_images" images into OpenLabeling."
+echo "---------------------------"
+echo "Would you like to start labeling? [y/n]"
+read labeling_answer
+if [ "$labeling_answer" = "y" ]
+then
+    cd OpenLabeling/main
+    python main.py
+fi
