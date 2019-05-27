@@ -59,6 +59,10 @@ new_str=${duration_str: $search_index}
 bag_file_seconds=${new_str%??}
 echo "Bag file duration "$dur_mins"s"
 
+# get the image topic
+topic_str=`rosbag info $orig_file_name | grep topics | grep sensor_msgs/Image`
+image_topic=(`echo $topic_str | sed -r 's/topics: //g'`)
+
 # Save the bag file as jpegs
 echo "---------------------"
 echo "Replaying rosbag now and generating images"
@@ -71,7 +75,7 @@ export_path=`pwd`/images/$file_name_root
 ./scripts/loading_bar.py $bag_file_seconds &
 
 # export images to a specific path
-roslaunch launch/export.launch bag_file:=$file_path image_dir:=$export_path &> tmp.txt
+roslaunch launch/export.launch bag_file:=$file_path image_dir:=$export_path image_topic:=$image_topic &> tmp.txt
 
 # make sure everything's killed
 rm tmp.txt
