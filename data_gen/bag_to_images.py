@@ -41,7 +41,7 @@ def decompress_images(bag_filename, destination_folder, num_images_per_zip):
 
     for topic in topics.keys():
         print("\t%s %s %d" % (topic, topics[topic][0], topics[topic][1]))
-        
+
     toolbar_width = 70
     bar = progressbar.ProgressBar(maxval=toolbar_width,
                                   widgets=[progressbar.Bar('#', '[', ']'), ' ',
@@ -82,8 +82,8 @@ def decompress_images(bag_filename, destination_folder, num_images_per_zip):
     print("")  # move down a line from the progress bar
     print("Extracted %s images. Creating zips ..." % num_images)
     for subdir_name in subdir_names:
-        zip_images(destination_folder + "/" + subdir_name, "zipped_images/%s" %
-                   subdir_name)
+        zip_images(destination_folder + "/" + subdir_name,
+                   "zipped_images/%s_unlabeled" % subdir_name)
     print("Done!")
 
 
