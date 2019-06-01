@@ -23,8 +23,9 @@ def decompress_images(bag_filename):
     bridge = CvBridge()
     bag = rosbag.Bag(bag_filename)
 
-    if not os.path.exists("images"):
-        os.mkdir("images")
+    if os.path.exists("images"):
+        shutil.rmtree("images")
+    os.mkdir("images")
 
     start_time = bag.get_start_time()
     end_time = bag.get_end_time()
