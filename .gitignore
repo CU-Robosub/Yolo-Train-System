@@ -5,6 +5,7 @@
 *.png
 *.jpg
 *.pyc
+*.zip
 model_gen/old/
 model_gen/mnist/
 model_gen/data/
@@ -25,7 +26,12 @@ data_gen/images/*
 dada_gen/zipped_images/
 data_gen/OpenLabeling/main/input/
 data_gen/OpenLabeling/main/output/
+data_gen/OpenLabeling/main/current_zip.txt
 # data_gen/OpenLabeling/main/class_lists.txt
+
+# Train Gen
+
+train_gen/training_data/data/
 
 # emacs
 *~
