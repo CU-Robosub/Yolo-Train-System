@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python
 import argparse
 import glob
 import json
@@ -15,8 +15,8 @@ import xml.etree.cElementTree as ET
 DELAY = 20 # keyboard delay (in milliseconds)
 WITH_QT = False
 try:
-    cv2.namedWindow('Test')
-    cv2.displayOverlay('Test', 'Test QT', 500)
+    cv2.namedWindow('Loading...')
+    cv2.displayOverlay('Loading...', 'Test QT', 500)
     WITH_QT = True
 except cv2.error:
     print('-> Please ignore this error message\n')
@@ -605,7 +605,7 @@ def json_file_add_object(frame_data_dict, img_path, anchor_id, pred_counter, obj
 
 class LabelTracker():
     ''' Special thanks to Rafael Caballero Gonzalez '''
-    # extract the OpenCV version info, e.g.: 
+    # extract the OpenCV version info, e.g.:
     # OpenCV 3.3.4 -> [major_ver].[minor_ver].[subminor_ver]
     (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
 
@@ -783,7 +783,12 @@ cv2.resizeWindow(WINDOW_NAME, 1000, 700)
 cv2.setMouseCallback(WINDOW_NAME, mouse_listener)
 
 # selected image
-cv2.createTrackbar(TRACKBAR_IMG, WINDOW_NAME, 0, last_img_index, set_img_index)
+if last_img_index > 0:
+    cv2.createTrackbar(TRACKBAR_IMG, WINDOW_NAME, 0, last_img_index, set_img_index)
+else:
+    print("\nERROR: no images in input folder")
+    print("Did you run Yolo-Train-System/data_gen/label_zip.sh first?\n")
+    exit(-1)
 
 # selected class
 if last_class_index != 0:
