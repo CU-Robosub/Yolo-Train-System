@@ -1,5 +1,0 @@
-0 start_gate_pole
-1 path
-2 vampire_fathead
-3 vampire_flying
-4 vampire_walking
