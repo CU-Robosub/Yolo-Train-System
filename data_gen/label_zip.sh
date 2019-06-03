@@ -26,6 +26,8 @@ read res
 
 echo "Selected "${zip_arr[$res]}
 
+echo ${zip_arr[$res]} > ../OpenLabeling/main/current_zip.txt
+
 cp ${zip_arr[$res]} ../OpenLabeling/main/input/
 cd ../OpenLabeling/main/input
 unzip ${zip_arr[$res]}

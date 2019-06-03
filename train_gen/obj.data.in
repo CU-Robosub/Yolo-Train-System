@@ -1,0 +1,5 @@
+classes = $num_classes
+train   = $train_file
+valid   = $valid_file
+names   = $names_file
+backup  = $backup_dir
