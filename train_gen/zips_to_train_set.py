@@ -17,6 +17,7 @@ in labeled datasets
 """
 import os
 import shutil
+import zipfile
 from sklearn.model_selection import train_test_split
 from string import Template
 
@@ -41,7 +42,9 @@ def get_basename(zip_name):
 
 def unzip_zip(path, zip_name, target_folder):
     sub_folder = get_basename(zip_name)
-    shutil.unpack_archive(path + zip_name, target_folder + "/" + sub_folder, "zip")
+    zip_ref = zipfile.ZipFile(path + zip_name, 'r')
+    zip_ref.extractall(target_folder + "/" + sub_folder)
+    zip_ref.close()
 
     return sub_folder
 
