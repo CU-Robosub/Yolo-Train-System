@@ -1,11 +1,18 @@
 # Yolo Train System
 
-This repo assists the training of YOLO neural networks from the data generation stage to the training stage.
+This repo helps automate the process of deploying a new neural net to the sub, all the way from data collection to training and exporting.
 
-## Data Generation (data_gen)
-
-This directory contains all the needed scripts and tools to quickly go from a bag file to a zip file containing labeled jpg images and descriptors of the dataset. See the data_gen/README for more info on the process.
-
-## Model Generation (model_gen)
-
-This directory contains all the needed scripts to extract and combine zip files containing labeled jpg images and descriptors and feed them into darknet to train a model. See model_gen/README for more info on the process.
+The process:
+- Obtain bag files -> upload to Drive with correct name format: C###_M-dd-YY(#)-#.bag (see [naming](https://docs.google.com/document/d/11Dcfjjd2715yeOiL1VhgAn_CUhakEOS4rWTMpqKFxYM/edit))
+- Download bag file to data_gen/
+- Run bag_to_images.py:
+```
+cd data_gen/
+python bag_to_images.py --bag=<filename>.bag
+```
+- Now, the most fun part, label images: `python OpenLabeling/main/main.py`
+- Zip labels and images together: `python OpenLabeling/main/labeled_to_zip.py` -> upload to Drive
+- Download all labeled zips to train_gen/labeled_zips/
+- Prepare data for darknet: `python zips_to_train_set.py`
+- Train the net. From the darknet folder: `./darknet detector train ../train_gen/obj.data ../train_gen/yolov3.cfg darknet53.conv.74 -map`
+- ... A few hours later, organize the weights: `python zip_weights.py` -> upload to Drive
