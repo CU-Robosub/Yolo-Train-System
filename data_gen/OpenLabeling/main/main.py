@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python
 import argparse
 import glob
 import json
@@ -15,8 +15,8 @@ import xml.etree.cElementTree as ET
 DELAY = 20 # keyboard delay (in milliseconds)
 WITH_QT = False
 try:
-    cv2.namedWindow('Test')
-    cv2.displayOverlay('Test', 'Test QT', 500)
+    cv2.namedWindow('Loading...')
+    cv2.displayOverlay('Loading...', 'Test QT', 500)
     WITH_QT = True
 except cv2.error:
     print('-> Please ignore this error message\n')
@@ -33,6 +33,9 @@ class_index = 0
 img_index = 0
 img = None
 img_objects = []
+single_image_mode = False
+sticky_box = False
+
 
 INPUT_DIR = args.input_dir
 OUTPUT_DIR = args.output_dir
@@ -208,6 +211,37 @@ def draw_bboxes_from_file(tmp_img, annotation_paths, width, height):
             color = class_rgb[class_index].tolist()
             cv2.rectangle(tmp_img, (xmin, ymin), (xmax, ymax), color, line_thickness)
             tmp_img = draw_text(tmp_img, class_name, (xmin, ymin - 5), color, line_thickness)
+    
+    # if from YOLO
+    # ann_path = next(path for path in annotation_paths if 'YOLO' in path)
+    # if os.path.isfile(ann_path):
+    #     all_lines = [line.rstrip("\n") for line in open(ann_path)]
+    #     for line in all_lines:
+
+    #         class_name, x_center, y_center, x_width, y_height = line.split(" ")
+
+    #         class_name, x_center, y_center, x_width, y_height = float(class_name), float(x_center), float(y_center), float(x_width), float(y_height)
+
+    #         class_name = "start_gate_pole"
+    #         height = 480
+    #         width = 752
+    #         x_center *= float(width)
+    #         y_center *= float(height)
+    #         x_width *= float(width)
+    #         y_height *= float(height)
+    #         x_width /= 2.0
+    #         y_height /= 2.0
+    #         xmin = int(round(x_center - x_width))
+    #         ymin = int(round(y_center - y_height))
+    #         xmax = int(round(x_center + x_width))
+    #         ymax = int(round(y_center + y_height))
+
+    #         img_objects.append([0, xmin, ymin, xmax, ymax])
+    #         color = class_rgb[class_index].tolist()
+    #         cv2.rectangle(tmp_img, (xmin, ymin), (xmax, ymax), color, line_thickness)
+    #         tmp_img = draw_text(tmp_img, class_name, (xmin, ymin - 5), color, line_thickness)
+
+
     return tmp_img
 
 
@@ -605,7 +639,7 @@ def json_file_add_object(frame_data_dict, img_path, anchor_id, pred_counter, obj
 
 class LabelTracker():
     ''' Special thanks to Rafael Caballero Gonzalez '''
-    # extract the OpenCV version info, e.g.: 
+    # extract the OpenCV version info, e.g.:
     # OpenCV 3.3.4 -> [major_ver].[minor_ver].[subminor_ver]
     (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
 
@@ -783,7 +817,12 @@ cv2.resizeWindow(WINDOW_NAME, 1000, 700)
 cv2.setMouseCallback(WINDOW_NAME, mouse_listener)
 
 # selected image
-cv2.createTrackbar(TRACKBAR_IMG, WINDOW_NAME, 0, last_img_index, set_img_index)
+if last_img_index > 0:
+    cv2.createTrackbar(TRACKBAR_IMG, WINDOW_NAME, 0, last_img_index, set_img_index)
+else:
+    print("\nERROR: no images in input folder")
+    print("Did you run Yolo-Train-System/data_gen/label_zip.sh first?\n")
+    exit(-1)
 
 # selected class
 if last_class_index != 0:
@@ -823,9 +862,20 @@ while True:
         if point_2[0] is not -1:
             # save the bounding box
             save_bounding_box(annotation_paths, class_index, point_1, point_2, width, height)
-            # reset the points
-            point_1 = (-1, -1)
-            point_2 = (-1, -1)
+            # single bbox per image
+            if single_image_mode:
+                img_index = increase_index(img_index, last_img_index)
+                cv2.setTrackbarPos(TRACKBAR_IMG, WINDOW_NAME, img_index)
+            
+            if sticky_box:
+                # only reset second point
+                point_1 = point_2
+                point_2 = (-1, -1)
+            else:
+                # reset both points
+                point_1 = (-1, -1)
+                point_2 = (-1, -1)
+
 
     cv2.imshow(WINDOW_NAME, tmp_img)
     pressed_key = cv2.waitKey(DELAY)
@@ -856,6 +906,8 @@ while True:
                 '[q] to quit;\n'
                 '[a] or [d] to change Image;\n'
                 '[w] or [s] to change Class.\n'
+                '[i] to toggle single image mode.\n'
+                '[t] to toggle sticky box mode.\n'
                 )
         display_text(text, 5000)
     # show edges key listener
@@ -866,6 +918,10 @@ while True:
         else:
             edges_on = True
             display_text('Edges turned ON!', 1000)
+    elif pressed_key == ord('i'):
+        single_image_mode = not single_image_mode
+    elif pressed_key == ord('t'):
+        sticky_box = not sticky_box
     elif pressed_key == ord('p'):
         # check if the image is a frame from a video
         is_from_video, video_name = is_frame_from_video(img_path)
