@@ -3,3 +3,4 @@ path
 vampire_fathead
 vampire_flying
 vampire_walking
+vampire_cute
