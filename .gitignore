@@ -34,7 +34,7 @@ venv/
 # Train Gen
 train_gen/training_data/data/
 train_gen/obj.data
-train_gen/yolov3.cfg
+train_gen/yolov3*.cfg
 train_gen/weights_zips/darknet*/
 
 # emacs
