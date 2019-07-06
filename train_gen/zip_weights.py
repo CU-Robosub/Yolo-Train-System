@@ -38,6 +38,7 @@ def main():
 
     shutil.move(paths.weights_path + "../chart.png", zip_folder)
 
+    tiny_yolo = False
     for name in os.listdir(paths.weights_path):
         if name.endswith(".weights"):
             print("Adding %s ..." % name)
@@ -47,12 +48,22 @@ def main():
             else:
                 shutil.copy(paths.weights_path + name, weights_destination_backup_path)
 
+            if "tiny" in name and not tiny_yolo:
+                tiny_yolo = True
+
     # add extra config files
     shutil.copy(paths.cfg_out, zip_folder)
-    shutil.copy(paths.yolo_cfg_out, zip_folder)
     shutil.copy(paths.classes_file, zip_folder)
     shutil.copy(paths.train_file, zip_folder)
     shutil.copy(paths.test_file, zip_folder)
+
+    if tiny_yolo:
+        yolo_cfg = "yolov3-tiny.cfg"
+    else:
+        yolo_cfg = "yolov3.cfg"
+
+    shutil.copy(yolo_cfg, zip_folder)
+
 
     # move out of darknet
     shutil.move(zip_folder, paths.save_path + zip_name)
