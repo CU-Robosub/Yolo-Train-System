@@ -1,4 +1,4 @@
 [submodule "darknet"]
 	path = darknet
-	url = https://github.com/AlexeyAB/darknet.git
+	url = https://github.com/CU-Robosub/darknet.git
 	ignore = dirty
