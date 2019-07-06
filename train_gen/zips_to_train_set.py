@@ -16,10 +16,12 @@ in labeled datasets
 
 """
 import os
+import sys
 import shutil
 import zipfile
 from sklearn.model_selection import train_test_split
 from string import Template
+import argparse
 
 from defaults import paths
 
@@ -132,8 +134,18 @@ def organize_data(path, basename, global_map, train_file, val_file):
 
 def main():
     
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--tiny', action='store_true')
+    args = parser.parse_args(sys.argv[1:])
+
     cfg_template = "obj.data.in"
-    yolo_cfg_template = "yolov3.cfg.in"
+
+    if args.tiny:
+        yolo_cfg_template = "yolov3-tiny.cfg.in"
+        yolo_cfg_out = "yolov3-tiny.cfg"
+    else:
+        yolo_cfg_template = "yolov3.cfg.in"
+        yolo_cfg_out = paths.yolo_cfg_out
 
     print("\n")
 
@@ -155,7 +167,7 @@ def main():
 
     print("Generating config files ...\n")
     create_cfg_file(cfg_template, "obj.data", len(global_mapping), paths.train_file, paths.test_file, paths.classes_file, "backup/")
-    create_yolo_cfg_file(yolo_cfg_template, paths.yolo_cfg_out, len(global_mapping))
+    create_yolo_cfg_file(yolo_cfg_template, yolo_cfg_out, len(global_mapping))
 
 
 if __name__ == "__main__":

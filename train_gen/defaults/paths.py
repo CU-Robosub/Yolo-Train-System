@@ -3,8 +3,8 @@ All paths are relative to train_gen/
 """
 import os
 
-# curr_path = os.path.dirname(os.path.abspath(__file__) + "/../")
-curr_path = "."
+curr_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+# curr_path = "."
 zips_path = "labeled_zips/"
 training_path = curr_path + "/training_data/"
 data_path = training_path + "data/"
