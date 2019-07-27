@@ -10,7 +10,7 @@ Script that allows users to select and download weight files from Google drive a
 - Click "NEW PROJECT"
 
 ![](readme_screenshots/screen_3.png)
-- Name project "Robosub Weight Retrieve"
+- Name project "model_deploy"
 
 ![](readme_screenshots/screen_4.png)
 - Click bell icon at the top right of the screen
@@ -28,18 +28,18 @@ Script that allows users to select and download weight files from Google drive a
 - Click "Configure consent screen"
 
 ![](readme_screenshots/screen_8.png)
-- Enter "Application name" as "Robosub Weight Retrieve"
+- Enter "Application name" as "model_deploy"
 - Scroll down and click "Save"
 
 ![](readme_screenshots/screen_9.png)
 - Click "Other"
-- Enter "Name" as "Robosub Weight Retrieve"
+- Enter "Name" as "model_deploy"
 
 ![](readme_screenshots/screen_10.png)
 - Click "OK"
 
 ![](readme_screenshots/screen_11.png)
-- Click on new project "Robosub Weight Retrieve"
+- Click on new project "model_deploy"
 
 ![](readme_screenshots/screen_12.png)
 - Click "DOWNLOAD JSON"
