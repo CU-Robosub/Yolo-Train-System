@@ -58,4 +58,5 @@ pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-
 Format for running script:
 ./get_weights.sh <weight folder name>
 
-When running the script for the first time, a web browser will open asking to authenticate.
+- When running the script for the first time, a web browser will open asking to authenticate.
+- If an error is presented that the Google Drive api is not enabled, follow the provided steps in the terminal, wait a few minutes, and run the script again.
