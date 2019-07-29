@@ -2,5 +2,14 @@ start_gate_pole
 path
 vampire_fathead
 vampire_flying
-vampire_walking
+vampire_no_torso
 vampire_cute
+bat
+wolf
+dropper_cover
+pinger
+coffin
+dracula
+heart
+open_oval
+lever
