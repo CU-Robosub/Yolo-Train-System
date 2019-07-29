@@ -3,4 +3,4 @@
 > parameters.txt
 echo $1.>> parameters.txt
 
-python RobosubWeightRetrieve.py
+python model_deploy.py
