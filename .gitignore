@@ -24,11 +24,10 @@ model_gen/darknet
 # Data Gen
 # data_gen/bag_file/*
 data_gen/images/*
-dada_gen/zipped_images/
 data_gen/OpenLabeling/main/input/
 data_gen/OpenLabeling/main/output/
 data_gen/OpenLabeling/main/current_zip.txt
-# data_gen/OpenLabeling/main/class_lists.txt
+data_gen/OpenLabeling/main/class_lists.txt
 venv/
 
 # Train Gen
