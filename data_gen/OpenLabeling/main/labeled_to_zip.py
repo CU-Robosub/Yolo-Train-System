@@ -7,24 +7,24 @@ def sort_labeled(input_dir, output_dir, positive_dir, negative_dir):
     positive_images = []
     negative_images = []
     for file in os.listdir(output_dir):
+        lines = 0
         with open(output_dir + file) as f:
-            lines = 0
             for _ in f:
                 lines += 1
 
-            base_name = file.replace(".txt", "")
-            # contains a label
-            if lines > 0:
-                shutil.move(output_dir + file, positive_dir + "labels/" + file)
-                shutil.move(input_dir + base_name + ".jpg", positive_dir
-                            + "imgs/" + base_name + ".jpg")
-                positive_images.append(base_name + ".jpg")
-            # contains no label
-            else:
-                shutil.move(output_dir + file, negative_dir + "labels/" + file)
-                shutil.move(input_dir + base_name + ".jpg", negative_dir
-                            + "imgs/" + base_name + ".jpg")
-                negative_images.append(base_name + ".jpg")
+        base_name = file.replace(".txt", "")
+        # contains a label
+        if lines > 0:
+            shutil.move(output_dir + file, positive_dir + "labels/" + file)
+            shutil.move(input_dir + base_name + ".jpg", positive_dir
+                        + "imgs/" + base_name + ".jpg")
+            positive_images.append(base_name + ".jpg")
+        # contains no label
+        else:
+            shutil.move(output_dir + file, negative_dir + "labels/" + file)
+            shutil.move(input_dir + base_name + ".jpg", negative_dir
+                        + "imgs/" + base_name + ".jpg")
+            negative_images.append(base_name + ".jpg")
 
     print("Found %s positives and %s negatives" % (len(positive_images),
                                                    len(negative_images)))
