@@ -61,7 +61,7 @@ def decompress_images(bag_filename, destination_folder, num_images_per_zip):
                 if (num_images_per_zip != -1) or (len(subdir_names) == 0):
                     subdir_num += 1
                     subdir_names.append(
-                        bag_filename.split(".")[0] + "-%s" % subdir_num)
+                        bag_filename.split(".")[0] + "_%s" % subdir_num)
                     os.mkdir(destination_folder + "/" + subdir_names[subdir_num])
             try:
 

@@ -145,7 +145,7 @@ def main():
         yolo_cfg_out = "yolov3-tiny.cfg"
     else:
         yolo_cfg_template = "yolov3.cfg.in"
-        yolo_cfg_out = paths.yolo_cfg_out
+        yolo_cfg_out = "yolov3.cfg"
 
     print("\n")
 
